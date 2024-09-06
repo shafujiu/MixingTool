@@ -1,7 +1,7 @@
 import os
-from image_md5_changer import change_png_md5_with_annotation, change_png_md5_with_empty_byte
+import image_md5_changer as changer
 
-def update_directory_png_files(directory_path, method="annotation", comment=""):
+def update_directory_png_files(directory_path, method="annotation"):
     """遍历目录，更新其中所有 PNG 图片的 MD5 值"""
     for root, dirs, files in os.walk(directory_path):
         for file in files:
@@ -10,9 +10,10 @@ def update_directory_png_files(directory_path, method="annotation", comment=""):
                 print(f"正在处理文件: {file_path}")
                 
                 if method == "annotation":
-                    change_png_md5_with_annotation(file_path, comment)
+                    comment = changer.generate_random_string(16)
+                    changer.change_png_md5_with_annotation(file_path, comment)
                 elif method == "empty_byte":
-                    change_png_md5_with_empty_byte(file_path)
+                    changer.change_png_md5_with_empty_byte(file_path)
                 else:
                     print(f"未知的处理方式: {method}")
 
@@ -22,9 +23,6 @@ if __name__ == "__main__":
 
     # 让用户选择修改方式
     method = input("请选择修改方式 ('annotation' 或 'empty_byte'): ")
-
-    if method == "annotation":
-        comment = input("please enter the comment: ")
 
     # 检查目录是否存在
     if os.path.isdir(directory_path):

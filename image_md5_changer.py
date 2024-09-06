@@ -1,4 +1,12 @@
 import hashlib
+import random
+import string
+
+def generate_random_string(length=16):
+    """生成一个指定长度的随机字符串，包含字母和数字"""
+    characters = string.ascii_letters + string.digits  # 包含大小写字母和数字
+    return ''.join(random.choice(characters) for _ in range(length))
+
 
 def change_png_md5_with_annotation(image_path, comment="This is an invisible annotation"):
     """为指定的 PNG 图片插入注释并修改其 MD5 值"""
